@@ -6,12 +6,12 @@ jobs:
   lint:
     runs-on: [ubuntu-latest]
     container:
-      image: koalaman/shellcheck:latest
+      image: koalaman/shellcheck-alpine:latest
       options: --entrypoint /bin/sh
     steps:
       - uses: actions/checkout@v1
       - run: |
-            #!/usr/bin/env bash
+            #!/usr/bin/env sh
             set -ex
 
             shellcheck --version
