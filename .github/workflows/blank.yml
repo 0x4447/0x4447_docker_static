@@ -1,0 +1,18 @@
+name: CI
+
+on: [push]
+
+jobs:
+  lint:
+    runs-on: [ubuntu-latest]
+    container:
+      image: koalaman/shellcheck:latest
+      options: --entrypoint /bin/sh
+    steps:
+      - uses: actions/checkout@v1
+      - run: |
+            #!/usr/bin/env bash
+            set -ex
+
+            shellcheck --version
+            shellcheck *.sh
