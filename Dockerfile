@@ -5,7 +5,9 @@ ENV DOMAIN=${DOMAIN}
 
 # hadolint ignore=DL3008,DL3009,DL3015
 RUN apt-get update && \
-        apt-get install -y openssl
+        apt-get install -y \
+            curl \
+            openssl
 
 WORKDIR /opt/nginx
 COPY ["entrypoint.sh",  "."]
