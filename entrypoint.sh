@@ -1,25 +1,27 @@
 #!/bin/bash
-set -ex
+set -e
 
 main(){
-    env_init
     generate_certs
     setup_nginx
 }
 
-env_init(){
-    DOMAIN="${DOMAIN:-"localhost"}"
-}
-
 generate_certs(){
-    bash certs.sh "$DOMAIN"
+    bash certs.sh "$DOMAIN" 2> /dev/null
 }
 
 setup_nginx(){
     sed -i "s/DOMAIN/$DOMAIN/g" "/etc/nginx/sites-enabled/$DOMAIN/server.conf"
-    nginx -t
+    nginx -t 2> /dev/null
 
-    service nginx start && tail -f /var/stdout
+    cat << EOF
+Starting Nginx for https://$DOMAIN
+  * Don't forget to poison your hosts file to resolve DNS.
+EOF
+    service nginx start && {
+        echo "  * Now serving requests."
+        tail -f /dev/stdout
+    }
 }
 
 main

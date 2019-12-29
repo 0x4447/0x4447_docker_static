@@ -3,8 +3,6 @@ set -e
 
 DOMAIN="${1:-localhost}"
 
-echo "$DOMAIN"
-
 CA_KEY=/etc/ssl/ca.key
 CA_CRT=/etc/ssl/ca.pem
 
